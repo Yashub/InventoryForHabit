@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 from django_countries.fields import CountryField
 from localflavor.us.us_states import STATE_CHOICES
 
@@ -8,7 +9,7 @@ class Address(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=2, choices=STATE_CHOICES, null=True, blank=True)
     zip = models.IntegerField()
-    country =  CountryField()
+    country = CountryField()
 
 class DonationData(models.Model):
     DAYS_OF_WEEK = (
@@ -21,16 +22,13 @@ class DonationData(models.Model):
         (6, 'Sunday'),
     )
     donation_id = models.CharField(max_length=100)
-    date = models.DateTimeField()
+    date = models.DateTimeField('date donated')
     day_of_week = models.DateTimeField()
     type = models.CharField(max_length=100)
     receipt_declined = models.BooleanField()
-    address = models.ForeignKey(Address, on_delete=models.CASCADE,)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
     add_to_mailing_list = models.BooleanField()
     volunteer_interest = models.BooleanField()
-    num_items = models.IntegerField()
-    num_donations = models.IntegerField()
+    num_items = models.IntegerField(default=0)
     notes = models.CharField(max_length=400)
 
-
-# Create your models here.

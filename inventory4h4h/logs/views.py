@@ -1,7 +1,16 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from .forms import DonationDataForm
 
 def index(request):
-    return HttpResponse("Gang gang.")
+    donations_list = DonationDataForm.objects.all()
+    context = {
+        'donations_list' : donations_list,
+    }
+    return render(request, 'index.html', context)
 
-# Create your views here.
+def detail(request, donation_id):
+    donation=get_object_or_404(DonationDataForm, pk=donation_id)
+    return render(request, 'detail.html', donation)
+
+#Create your views here.
