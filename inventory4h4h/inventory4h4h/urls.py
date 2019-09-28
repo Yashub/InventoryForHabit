@@ -17,5 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
+    path('logs/', include('logs.urls'))
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='/logs/')),
 ]
